@@ -138,13 +138,13 @@ end
 def enemy_spawn_position
   case rand(4)
   when 0
-    [rand(0..(Window.width - ENEMY_SIZE)).to_f, -ENEMY_SIZE.to_f]
+    [rand(0..(Window.width - ENEMY_SIZE)).to_f, 0.0]
   when 1
-    [Window.width.to_f, rand(0..(Window.height - ENEMY_SIZE)).to_f]
+    [(Window.width - ENEMY_SIZE).to_f, rand(0..(Window.height - ENEMY_SIZE)).to_f]
   when 2
-    [rand(0..(Window.width - ENEMY_SIZE)).to_f, Window.height.to_f]
+    [rand(0..(Window.width - ENEMY_SIZE)).to_f, (Window.height - ENEMY_SIZE).to_f]
   else
-    [-ENEMY_SIZE.to_f, rand(0..(Window.height - ENEMY_SIZE)).to_f]
+    [0.0, rand(0..(Window.height - ENEMY_SIZE)).to_f]
   end
 end
 
@@ -495,10 +495,10 @@ update do
   end
 
   if enemies.empty? && !game_over
-    wave += 1
-    spawn_wave(enemies, wave)
+  wave += 1
+  clear_projectiles(projectiles)
+  spawn_wave(enemies, wave)
   end
-
   dash_cooldown -= 1 if dash_cooldown > 0
 
   old_player_x = player.x
